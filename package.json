@@ -19,6 +19,7 @@
   "homepage": "https://github.com/tb-fed/tb-cli#readme",
   "dependencies": {
     "commander": "^6.1.0",
+    "cross-spawn": "^7.0.3",
     "yargs": "^15.4.1"
   }
 }
