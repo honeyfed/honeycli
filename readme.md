@@ -32,8 +32,12 @@ tb extend <command>
 
 ### build project
 
-todo
+```bash
+tb build
+```
 
 ### start development server
 
-todo
+```bash
+tb dev
+```
