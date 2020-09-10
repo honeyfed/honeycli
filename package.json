@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/tb-fed/tb-cli#readme",
   "dependencies": {
+    "axios": "^0.20.0",
     "commander": "^6.1.0",
     "cross-spawn": "^7.0.3",
+    "inquirer": "^7.3.3",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
