@@ -1,7 +1,6 @@
 # tb-cli
 
 ![GitHub](https://img.shields.io/github/license/tb-fed/tb-cli)
-
 ![size](https://img.shields.io/github/repo-size/tb-fed/tb-cli)
 
 dont forget to ignore the node modules. ;-)
