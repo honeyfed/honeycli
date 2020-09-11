@@ -1,5 +1,8 @@
 # tb-cli
 
+![GitHub](https://img.shields.io/github/license/tb-fed/tb-cli)
+![size](https://img.shields.io/github/repo-size/tb-fed/tb-cli)
+
 dont forget to ignore the node modules. ;-)
 
 ## how-tos
@@ -30,8 +33,12 @@ tb extend <command>
 
 ### build project
 
-todo
+```bash
+tb build
+```
 
 ### start development server
 
-todo
+```bash
+tb dev
+```
