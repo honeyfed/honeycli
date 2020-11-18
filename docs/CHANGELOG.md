@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/tb-fed/tb-cli/compare/v1.1.0...v1.2.0) (2020-11-18)
+
+
+### Features
+
+* 添加changelog工具 ([b3d1f35](https://github.com/tb-fed/tb-cli/commit/b3d1f35fe65b83d4fcfe8656a743294e3e0b8b8b))
+* test ([77e736d](https://github.com/tb-fed/tb-cli/commit/77e736d7cf9e4735b3003811b9daa1b680063d6d))
+
 ## 1.1.0 (2020-11-18)
 
 
