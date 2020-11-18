@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/tb-fed/tb-cli/compare/v1.2.0...v1.3.0) (2020-11-18)
+
+
+### Features
+
+* 删除错误代码 ([61dd3fb](https://github.com/tb-fed/tb-cli/commit/61dd3fb3bf653d0ccf6fe9d95e7bc642805ffabe))
+* test ([6127485](https://github.com/tb-fed/tb-cli/commit/6127485c23f0d767a29e0fe42c6bb6caba580bd6))
+* test1 ([1f609e8](https://github.com/tb-fed/tb-cli/commit/1f609e81a922c23f4c8143437fd68e773b563377))
+
+
+### Bug Fixes
+
+* 修复git提交问题 ([8d0d432](https://github.com/tb-fed/tb-cli/commit/8d0d4324e4707d2cb89a12f5a16fd4de398f533c))
+
 ## [1.2.0](https://github.com/tb-fed/tb-cli/compare/v1.1.0...v1.2.0) (2020-11-18)
 
 
