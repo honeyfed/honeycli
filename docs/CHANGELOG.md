@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/tb-fed/tb-cli/compare/v1.3.0...v1.4.0) (2020-12-01)
+
+
+### Features
+
+* 定制化git提交信息 ([51bda01](https://github.com/tb-fed/tb-cli/commit/51bda016c5d2efac0e1d174d556668dc1da365be))
+* 汉化其他操作内容 ([af1547f](https://github.com/tb-fed/tb-cli/commit/af1547fd23f9682be36f8c2b93df9f8a3026f7df))
+* 去除不必要的提交项 ([cf1d2cf](https://github.com/tb-fed/tb-cli/commit/cf1d2cfe2fd913b954704965c35936a3edf72225))
+* 添加changlog生成成功显示 ([82b1be3](https://github.com/tb-fed/tb-cli/commit/82b1be37aabbf4f2a8f7dd86b8f14a927a73bb97))
+* 修改版本号 ([8f3c5a7](https://github.com/tb-fed/tb-cli/commit/8f3c5a75c4bfb591b1576eaa25d90a69b77e1bf4))
+* chinese ([b80d6d1](https://github.com/tb-fed/tb-cli/commit/b80d6d1b98cd569cf89f639097b17af9f3246f02))
+* update command name ([298ff15](https://github.com/tb-fed/tb-cli/commit/298ff1543e445bceff6a2e4be9370b5960a32db1))
+
+
+### Bug Fixes
+
+* 当gitstatus为空时异常判断 ([19e767e](https://github.com/tb-fed/tb-cli/commit/19e767e4b3ecdf22d20f05fea39f5226bda7998d))
+* 添加没代码提交时的提示 ([e5baf51](https://github.com/tb-fed/tb-cli/commit/e5baf51373183f7494275a48b2ddf976b820ec37))
+
 ## [1.3.0](https://github.com/tb-fed/tb-cli/compare/v1.2.0...v1.3.0) (2020-11-18)
 
 
