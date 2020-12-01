@@ -38,7 +38,6 @@ var filterSubject = function(subject, disableSubjectLowerCase) {
 // fine.
 module.exports = function(options) {
   var types = options.types;
-
   var length = longest(Object.keys(types)).length + 1;
   var choices = map(types, function(type, key) {
     return {
@@ -122,44 +121,6 @@ module.exports = function(options) {
             return filterSubject(subject, options.disableSubjectLowerCase);
           }
         },
-        {
-          type: 'input',
-          name: 'body',
-          message:
-            'Provide a longer description of the change: (press enter to skip)\n',
-          default: options.defaultBody
-        },
-        {
-          type: 'confirm',
-          name: 'isBreaking',
-          message: 'Are there any breaking changes?',
-          default: false
-        },
-        {
-          type: 'input',
-          name: 'breakingBody',
-          default: '-',
-          message:
-            'A BREAKING CHANGE commit requires a body. Please enter a longer description of the commit itself:\n',
-          when: function(answers) {
-            return answers.isBreaking && !answers.body;
-          },
-          validate: function(breakingBody, answers) {
-            return (
-              breakingBody.trim().length > 0 ||
-              'Body is required for BREAKING CHANGE'
-            );
-          }
-        },
-        {
-          type: 'input',
-          name: 'breaking',
-          message: 'Describe the breaking changes:\n',
-          when: function(answers) {
-            return answers.isBreaking;
-          }
-        },
-
         {
           type: 'confirm',
           name: 'isIssueAffected',
