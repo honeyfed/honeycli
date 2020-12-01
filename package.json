@@ -33,5 +33,29 @@
   "devDependencies": {
     "cz-conventional-changelog": "^3.3.0",
     "jest": "^26.4.2"
-  }
+  },
+  "config": {
+    "commitizen": {
+        "path": "./node_modules/cz-conventional-changelog",
+        "disableScopeLowerCase": false,
+        "disableSubjectLowerCase": false,
+        "maxHeaderWidth": 100,
+        "maxLineWidth": 100,
+        "defaultType": "",
+        "defaultScope": "",
+        "defaultSubject": "",
+        "defaultBody": "",
+        "defaultIssues": "",
+        "types": {
+          "feat": {
+            "description": "A new feature",
+            "title": "Features"
+          },
+          "fix": {
+            "description": "A new fix",
+            "title": "Fix"
+          }
+        }
+    }
+}
 }
