@@ -124,7 +124,7 @@ module.exports = function(options) {
         {
           type: 'confirm',
           name: 'isIssueAffected',
-          message: 'Does this change affect any open issues?',
+          message: '这一变化是否会影响任何未解决的问题？',
           default: options.defaultIssues ? true : false
         },
         {
@@ -132,7 +132,7 @@ module.exports = function(options) {
           name: 'issuesBody',
           default: '-',
           message:
-            'If issues are closed, the commit requires a body. Please enter a longer description of the commit itself:\n',
+            '如果问题已关闭，则提交需要正文。请输入对提交本身的更长描述：\n',
           when: function(answers) {
             return (
               answers.isIssueAffected && !answers.body && !answers.breakingBody
