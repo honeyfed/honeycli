@@ -9,39 +9,39 @@
       "title": "Bug Fixes"
     },
     "docs": {
-      "description": "Documentation only changes",
+      "description": "只修改了文本",
       "title": "Documentation"
     },
     "style": {
-      "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)",
+      "description": "不影响代码含义的更改(空格、格式、缺少分号等)",
       "title": "Styles"
     },
     "refactor": {
-      "description": "A code change that neither fixes a bug nor adds a feature",
+      "description": "既不修复错误也不添加功能的代码更改",
       "title": "Code Refactoring"
     },
     "perf": {
-      "description": "A code change that improves performance",
+      "description": "提高性能的代码更改",
       "title": "Performance Improvements"
     },
     "test": {
-      "description": "Adding missing tests or correcting existing tests",
+      "description": "添加丢失的测试或更正现有测试",
       "title": "Tests"
     },
     "build": {
-      "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)",
+      "description": "影响构建系统或外部依赖项的更改(示例范围：gulp、broccoli、NPM)",
       "title": "Builds"
     },
     "ci": {
-      "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)",
+      "description": "更改配置项配置文件和脚本(示例作用域：Travis、Circle、BrowserStack、SauceLabs)",
       "title": "Continuous Integrations"
     },
     "chore": {
-      "description": "Other changes that don't modify src or test files",
+      "description": "其他不修改src或测试文件的更改",
       "title": "Chores"
     },
     "revert": {
-      "description": "Reverts a previous commit",
+      "description": "恢复上一次提交",
       "title": "Reverts"
     }
   }
