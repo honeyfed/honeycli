@@ -10,35 +10,35 @@ dont forget to ignore the node modules. ;-)
 ### create a new project from template
 
 ```bash
-tb new <template-name>
+honey new <template-name>
 ```
 
 ### strict git commit
 
 ```bash
-tb commit
+honey commit
 ```
 
 ### lint code
 
 ```bash
-tb lint
+honey lint
 ```
 
 ### run extend command
 
 ```bash
-tb extend <command>
+honey extend <command>
 ```
 
 ### build project
 
 ```bash
-tb build
+honey build
 ```
 
 ### start development server
 
 ```bash
-tb dev
+honey dev
 ```
