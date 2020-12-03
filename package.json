@@ -1,13 +1,13 @@
 {
   "name": "@tencent/honey-cli2",
-  "version": "1.4.0",
+  "version": "1.4.4",
   "description": "a frontend cli toolkit",
   "main": "cli.js",
   "bin": {
     "honey": "cli.js"
   },
   "scripts": {
-    "test": "jest"
+    "build": "babel ./src --out-dir ./lib"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "chalk": "^4.1.0",
     "commander": "^6.1.0",
     "commitizen": "^4.2.2",
+    "copy-webpack-plugin": "^6.3.2",
     "core-js": "^3.7.0",
     "cross-spawn": "^7.0.3",
     "css-loader": "^5.0.1",
@@ -51,7 +52,9 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
+    "babel-preset-minify": "^0.5.1",
     "cz-conventional-changelog": "^3.3.0",
-    "jest": "^26.4.2"
+    "jest": "^26.4.2",
+    "terser": "^4.8.0"
   }
 }
