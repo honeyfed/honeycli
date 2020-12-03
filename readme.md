@@ -43,6 +43,11 @@ honey build
 honey dev
 ```
 
+### format code
+
+```bash
+honey format
+```
 
 ## config
 

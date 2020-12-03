@@ -3,6 +3,7 @@ const print = require('./print')
 const spawn = require('cross-spawn')
 const rmcb = require("rimraf");
 const util = require('util')
+const glob=require('glob')
 function makeGithubUrlForTbTemplate(templateName) {
   return `https://github.com/tb-fed/template-${templateName}.git`
 }
@@ -17,6 +18,10 @@ function loadJson(filePath) {
     print.error(err)
   }
   return null
+}
+
+function readFile(filepath) {
+  return fs.readFileSync(filepath, 'utf8')
 }
 
 function writeFile(filepath, content) {
@@ -47,11 +52,26 @@ function doCmd(cmd, arr, std = {stdio: 'inherit'}) {
 
 const rm = util.promisify(rmcb);
 
+
+function getFiles(pattern) {
+  return new Promise((resolve, reject) => {
+    glob(pattern, (err, files) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(files)
+      }
+    })
+  })
+}
+
 module.exports = {
   makeGithubUrlForTbTemplate,
   loadJson,
   isValidName,
   doCmd,
   rm,
-  writeFile
+  readFile,
+  writeFile,
+  getFiles
 }

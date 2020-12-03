@@ -1,9 +1,14 @@
 const program = require("commander");
 const { newCmd } = require("./cmd/new_cmd");
 const { serve } = require("./serve");
-const { gitCommit, gitPushCmd, generateChangeLog } = require("./cmd/commit_cmd");
-const {buildCmd}=require('./cmd/build_cmd')
-const {devCmd} =require('./cmd/dev_cmd')
+const {
+  gitCommit,
+  gitPushCmd,
+  generateChangeLog,
+} = require("./cmd/commit_cmd");
+const { buildCmd } = require("./cmd/build_cmd");
+const { devCmd } = require("./cmd/dev_cmd");
+const {formatCmd}=require('./cmd/format_cmd')
 const print = require("./util/print");
 function main() {
   print.info("honey cli");
@@ -51,7 +56,7 @@ function main() {
     .alias("d")
     .description("启动本地开发")
     .action((cmd) => {
-      devCmd()
+      devCmd();
     });
   program
     .command("lint")
@@ -59,6 +64,13 @@ function main() {
     .description("代码检查")
     .action((cmd) => {
       print.info(cmd);
+    });
+  program
+    .command("format")
+    .alias("fmt")
+    .description("代码格式化")
+    .action((cmd) => {
+      formatCmd();
     });
   program
     .command("extend <command>")
