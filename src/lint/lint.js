@@ -1,4 +1,4 @@
-
+const path = require("path");
 function getEslintrc() {
   return `
   module.exports = {
@@ -8,9 +8,19 @@ function getEslintrc() {
     extends: ["plugin:vue/essential", 'eslint-config-tencent'],
     plugins: ["vue"],
   };
-  `
+  `;
+}
+
+function getEsLintOptions() {
+  return {
+    fix: true,
+    extensions: [".js", ".jsx", ".vue"],
+    useEslintrc: false,
+    overrideConfigFile: path.resolve(__dirname, "./eslintrc.js"),
+  };
 }
 
 module.exports = {
-  getEslintrc
-}
+  getEslintrc,
+  getEsLintOptions,
+};

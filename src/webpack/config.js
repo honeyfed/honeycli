@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
+const { getEsLintOptions } = require("../lint/lint");
 // const UploadCdnPlugin = require('./uploadcdn.js')
 
 function proxyConfigToDevServer(honeyConfig) {
@@ -136,12 +137,7 @@ function generateWebpackConfig(config, mode = "production") {
       }),
       // new UploadCdnPlugin(),
       new ProgressBarPlugin(),
-      new EslintWebpackPlugin({
-        fix: true,
-        extensions: ['.js', '.jsx', '.vue'],
-        useEslintrc: false,
-        overrideConfigFile: path.resolve(__dirname, '../lint/eslintrc.js')
-      })
+      new EslintWebpackPlugin(getEsLintOptions()),
     ],
   };
   if (config.static) {

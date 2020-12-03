@@ -8,7 +8,8 @@ const {
 } = require("./cmd/commit_cmd");
 const { buildCmd } = require("./cmd/build_cmd");
 const { devCmd } = require("./cmd/dev_cmd");
-const {formatCmd}=require('./cmd/format_cmd')
+const { formatCmd } = require("./cmd/format_cmd");
+const { lintCmd } = require("./cmd/lint_cmd");
 const print = require("./util/print");
 function main() {
   print.info("honey cli");
@@ -63,7 +64,7 @@ function main() {
     .alias("l")
     .description("代码检查")
     .action((cmd) => {
-      print.info(cmd);
+      lintCmd();
     });
   program
     .command("format")
