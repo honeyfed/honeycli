@@ -1,6 +1,6 @@
 {
   "name": "@tencent/honey-cli2",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "description": "a frontend cli toolkit",
   "main": "cli.js",
   "bin": {
@@ -31,6 +31,7 @@
     "core-js": "^3.7.0",
     "cross-spawn": "^7.0.3",
     "css-loader": "^5.0.1",
+    "eslint": "^7.14.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.0",
     "inquirer": "^7.3.3",

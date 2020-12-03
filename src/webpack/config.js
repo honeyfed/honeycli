@@ -33,7 +33,7 @@ function generateWebpackConfig(config, mode = "production") {
     entry: path.resolve(config.src, config.entry),
     output: {
       path: config.dist,
-      filename: "app.js",
+      filename: mode === 'production' ? "[name].[hash:6].js" : "[name].js",
       publicPath: "/",
     },
     resolve: {
@@ -83,7 +83,7 @@ function generateWebpackConfig(config, mode = "production") {
             {
               loader: "url-loader",
               options: {
-                name: "fonts/[name]-[hash:6].[ext]",
+                name: mode === "production" ? "fonts/[name]-[hash:6].[ext]" : "fonts/[name].[ext]",
                 limit: 8092,
                 esModule: false,
               },
@@ -96,7 +96,7 @@ function generateWebpackConfig(config, mode = "production") {
             {
               loader: "url-loader",
               options: {
-                name: "imgs/[name]-[hash:6].[ext]",
+                name: mode==="production" ? "imgs/[name]-[hash:6].[ext]" : "imgs/[name].[ext]",
                 limit: 8092,
                 esModule: false,
               },
