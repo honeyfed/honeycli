@@ -19,6 +19,10 @@ function loadJson(filePath) {
   return null
 }
 
+function writeFile(filepath, content) {
+  fs.writeFileSync(filepath, content)
+}
+
 function isValidName(name) {
   return /^[a-zA-Z0-9-_]+$/.test(name)
 }
@@ -48,5 +52,6 @@ module.exports = {
   loadJson,
   isValidName,
   doCmd,
-  rm
+  rm,
+  writeFile
 }

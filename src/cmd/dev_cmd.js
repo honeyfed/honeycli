@@ -2,9 +2,10 @@
  * This module is based on webpack. It provides development and deploy features.
  */
 
-const { doCmd, rm } = require("../util/utils");
+const { doCmd, rm, writeFile } = require("../util/utils");
 const print = require("../util/print");
-
+const { getEslintrc } = require("../lint/lint");
+const path = require("path");
 const { generateWebpackConfig } = require("../webpack/config");
 const { loadHoneyConfig } = require("../util/config");
 const webpack = require("webpack");
@@ -13,7 +14,14 @@ const webpackDevServer = require("webpack-dev-server");
 async function devCmd() {
   try {
     await doCmd("npm i --save core-js@3");
+    await doCmd(
+      "npm i --save-dev --force eslint eslint-plugin-vue eslint-config-tencent"
+    );
     await doCmd("npm i");
+    rm(path.resolve(process.cwd(), ".eslintrc.js"));
+    rm(path.resolve(process.cwd(), ".eslintrc.json"));
+    rm(path.resolve(process.cwd(), ".eslintrc"));
+    writeFile(path.resolve(process.cwd(), ".eslintrc.js"), getEslintrc());
   } catch (err) {
     print.error(err);
   }
@@ -22,7 +30,7 @@ async function devCmd() {
 
   try {
     //build
-    const webpackConfig = generateWebpackConfig(config, 'development');
+    const webpackConfig = generateWebpackConfig(config, "development");
     const server = new webpackDevServer(
       webpack(webpackConfig),
       webpackConfig.devServer
