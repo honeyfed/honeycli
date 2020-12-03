@@ -3,29 +3,32 @@ const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const EslintWebpackPlugin = require("eslint-webpack-plugin");
 // const UploadCdnPlugin = require('./uploadcdn.js')
 
 function proxyConfigToDevServer(honeyConfig) {
-  const proxyConfig = honeyConfig.dev.proxy
-  const devProxyConfig = {}
+  const proxyConfig = honeyConfig.dev.proxy;
+  const devProxyConfig = {};
   if (Array.isArray(proxyConfig) && proxyConfig.length) {
-    proxyConfig.forEach(config => {
+    proxyConfig.forEach((config) => {
       if (config.from && config.to) {
         devProxyConfig[config.from] = {
           target: config.to,
           changeOrigin: true,
-          cookieDomainRewrite: "localhost"
-        }
+          cookieDomainRewrite: "localhost",
+        };
         if (honeyConfig.dev.mock) {
-          const mockFunction = require(path.resolve(process.cwd(), honeyConfig.dev.mock))
-          devProxyConfig[config.from].bypass = mockFunction
+          const mockFunction = require(path.resolve(
+            process.cwd(),
+            honeyConfig.dev.mock
+          ));
+          devProxyConfig[config.from].bypass = mockFunction;
         }
       }
-    })
+    });
   }
-  return devProxyConfig
+  return devProxyConfig;
 }
-
 
 function generateWebpackConfig(config, mode = "production") {
   const webpackConfig = {
@@ -33,7 +36,7 @@ function generateWebpackConfig(config, mode = "production") {
     entry: path.resolve(config.src, config.entry),
     output: {
       path: config.dist,
-      filename: mode === 'production' ? "[name].[hash:6].js" : "[name].js",
+      filename: mode === "production" ? "[name].[hash:6].js" : "[name].js",
       publicPath: "/",
     },
     resolve: {
@@ -83,7 +86,10 @@ function generateWebpackConfig(config, mode = "production") {
             {
               loader: "url-loader",
               options: {
-                name: mode === "production" ? "fonts/[name]-[hash:6].[ext]" : "fonts/[name].[ext]",
+                name:
+                  mode === "production"
+                    ? "fonts/[name]-[hash:6].[ext]"
+                    : "fonts/[name].[ext]",
                 limit: 8092,
                 esModule: false,
               },
@@ -96,7 +102,10 @@ function generateWebpackConfig(config, mode = "production") {
             {
               loader: "url-loader",
               options: {
-                name: mode==="production" ? "imgs/[name]-[hash:6].[ext]" : "imgs/[name].[ext]",
+                name:
+                  mode === "production"
+                    ? "imgs/[name]-[hash:6].[ext]"
+                    : "imgs/[name].[ext]",
                 limit: 8092,
                 esModule: false,
               },
@@ -127,6 +136,12 @@ function generateWebpackConfig(config, mode = "production") {
       }),
       // new UploadCdnPlugin(),
       new ProgressBarPlugin(),
+      new EslintWebpackPlugin({
+        fix: true,
+        extensions: ['.js', '.jsx', '.vue'],
+        useEslintrc: false,
+        overrideConfigFile: path.resolve(__dirname, '../lint/eslintrc.js')
+      })
     ],
   };
   if (config.static) {
