@@ -1,13 +1,14 @@
 {
   "name": "@tencent/honey-cli2",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "a frontend cli toolkit",
   "main": "cli.js",
   "bin": {
     "honey": "cli.js"
   },
   "scripts": {
-    "build": "babel ./src --out-dir ./lib"
+    "build": "babel ./src --out-dir ./lib",
+    "pub": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",

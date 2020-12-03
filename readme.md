@@ -118,8 +118,24 @@ e.g.
           "from": "/access",
           "to": "https://wy-test.haina.com/access"
         }
-      ]
+      ],
+      "mock": "path to mock.js"
     }
   }
 }
+```
+
+#### how to write a mock file
+
+e.g.
+
+```javascript
+module.exports = function(req, res) {
+  console.log('req.path: ', req.path);
+  if (req.path === '/access/timestamp') {
+    res.send('' + Date.now());
+    return false;
+  }
+};
+
 ```
