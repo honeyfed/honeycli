@@ -5,6 +5,28 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 // const UploadCdnPlugin = require('./uploadcdn.js')
 
+function proxyConfigToDevServer(honeyConfig) {
+  const proxyConfig = honeyConfig.dev.proxy
+  const devProxyConfig = {}
+  if (Array.isArray(proxyConfig) && proxyConfig.length) {
+    proxyConfig.forEach(config => {
+      if (config.from && config.to) {
+        devProxyConfig[config.from] = {
+          target: config.to,
+          changeOrigin: true,
+          cookieDomainRewrite: "localhost"
+        }
+        if (honeyConfig.dev.mock) {
+          const mockFunction = require(path.resolve(process.cwd(), honeyConfig.dev.mock))
+          devProxyConfig[config.from].bypass = mockFunction
+        }
+      }
+    })
+  }
+  return devProxyConfig
+}
+
+
 function generateWebpackConfig(config, mode = "production") {
   const webpackConfig = {
     mode,
@@ -61,7 +83,7 @@ function generateWebpackConfig(config, mode = "production") {
             {
               loader: "url-loader",
               options: {
-                name: 'fonts/[name]-[hash:6].[ext]',
+                name: "fonts/[name]-[hash:6].[ext]",
                 limit: 8092,
                 esModule: false,
               },
@@ -74,7 +96,7 @@ function generateWebpackConfig(config, mode = "production") {
             {
               loader: "url-loader",
               options: {
-                name: 'imgs/[name]-[hash:6].[ext]',
+                name: "imgs/[name]-[hash:6].[ext]",
                 limit: 8092,
                 esModule: false,
               },
@@ -88,38 +110,18 @@ function generateWebpackConfig(config, mode = "production") {
         chunks: "all",
       },
     },
-    devtool: mode === 'production' ? 'none' : "eval-source-map",
+    devtool: mode === "production" ? "none" : "eval-source-map",
     devServer: {
-      port: 8082,
+      port: config.port,
       hot: true,
       historyApiFallback: {
         rewrites: [{ from: /.*/, to: "/index.html" }],
       },
-      proxy: {
-        "/access": {
-          target: "https://wy-test.haina.com",
-          changeOrigin: true,
-          cookieDomainRewrite: "localhost",
-          bypass: function(req, res) {
-            console.log("req.path: ", req.path);
-            if (req.path === "/access/timestamp") {
-              res.send("" + Date.now());
-              return false;
-            }
-          },
-        },
-      },
+      proxy: proxyConfigToDevServer(config),
     },
     plugins: [
       new VueLoaderPlugin(),
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: config.static,
-            to: config.dist,
-          },
-        ],
-      }),
+
       new HtmlWebpackPlugin({
         template: path.resolve(config.src, config.template),
       }),
@@ -127,6 +129,18 @@ function generateWebpackConfig(config, mode = "production") {
       new ProgressBarPlugin(),
     ],
   };
+  if (config.static) {
+    webpackConfig.plugins.push(
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: config.static,
+            to: config.dist,
+          },
+        ],
+      })
+    );
+  }
   return webpackConfig;
 }
 module.exports = {

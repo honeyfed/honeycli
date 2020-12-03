@@ -2,47 +2,22 @@
  * This module is based on webpack. It provides development and deploy features.
  */
 
-const { loadJson, doCmd } = require("../util/utils");
+const { doCmd, rm } = require("../util/utils");
 const print = require("../util/print");
 const _ = require("lodash");
-const rmcb = require("rimraf");
-const util = require("util");
-const path = require("path");
-const { generateWebpackConfig } = require("../webpack/tool");
+const { generateWebpackConfig } = require("../webpack/config");
+const { loadHoneyConfig } = require("../util/config");
 const webpack = require("webpack");
 
-const rm = util.promisify(rmcb);
-
-const defaultConfig = {
-  src: "./src",
-  dist: "./dist",
-  entry: "index.js",
-  template: "index.html",
-  static: './static'
-};
-
 async function buildCmd() {
-
   try {
-    await doCmd('npm i --save core-js@3')
-    await doCmd('npm i')
+    await doCmd("npm i --save core-js@3");
+    await doCmd("npm i");
   } catch (err) {
-    print.error(err)
+    print.error(err);
   }
 
-  const packageJson = loadJson("./package.json");
-
-  const config = {};
-  _.merge(config, defaultConfig);
-  if (packageJson && packageJson.honeyConfig) {
-    // console.log(packageJson.honeyConfig)
-
-    _.merge(config, packageJson.honeyConfig);
-  } else {
-    print.info("no config found");
-  }
-  config.src = path.resolve(process.cwd(), config.src);
-  config.dist = path.resolve(process.cwd(), config.dist);
+  const config = loadHoneyConfig();
 
   try {
     await rm(config.dist);

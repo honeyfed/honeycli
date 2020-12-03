@@ -42,3 +42,84 @@ honey build
 ```bash
 honey dev
 ```
+
+
+## config
+
+honey config is put in project's package.json
+
+for example:
+
+```json
+{
+  "honeyConfig": {
+    "src": "./src"
+  }
+}
+```
+
+### config options
+
+#### src
+
+source folder
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "src": "./src"
+  }
+}
+```
+
+#### dist
+
+source folder
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "dist": "./dist"
+  }
+}
+```
+
+#### static
+
+static resource folder, will not be compiled, just been copied to dist folder
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "static": "./static"
+  }
+}
+```
+
+#### dev
+
+development options
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "dev": {
+      "port" : 8080,
+      "proxy": [
+        {
+          "from": "/access",
+          "to": "https://wy-test.haina.com/access"
+        }
+      ]
+    }
+  }
+}
+```
