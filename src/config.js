@@ -1,4 +1,4 @@
-const net = require('./net')
+const net = require('./util/net')
 function loadProjectConfig() {
 
 }

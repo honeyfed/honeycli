@@ -1,10 +1,10 @@
 const program = require("commander");
-const { newCmd } = require("./new_cmd");
+const { newCmd } = require("./cmd/new_cmd");
 const { serve } = require("./serve");
-const { gitCommit, gitPushCmd, generateChangeLog } = require("./commit_cmd");
-const {buildCmd}=require('./build_cmd')
-const {devCmd} =require('./dev_cmd')
-const print = require("./print");
+const { gitCommit, gitPushCmd, generateChangeLog } = require("./cmd/commit_cmd");
+const {buildCmd}=require('./cmd/build_cmd')
+const {devCmd} =require('./cmd/dev_cmd')
+const print = require("./util/print");
 function main() {
   print.info("honey cli");
 

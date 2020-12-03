@@ -1,9 +1,9 @@
-const { makeGithubUrlForTbTemplate, isValidName, rm } = require("./utils")
-const { gitClone } = require("./git")
-const {GitError} = require('./errors')
+const { makeGithubUrlForTbTemplate, isValidName, rm } = require("../util/utils")
+const { gitClone } = require("../git/git")
+const {GitError} = require('../util/errors')
 const inquirer = require('inquirer')
-const { loadTemplates } = require("./config")
-const print = require('./print')
+const { loadTemplates } = require("../config")
+const print = require('../util/print')
 
 async function newCmd(templateName) {
   

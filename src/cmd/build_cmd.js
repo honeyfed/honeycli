@@ -2,13 +2,13 @@
  * This module is based on webpack. It provides development and deploy features.
  */
 
-const { loadJson, doCmd } = require("./utils");
-const print = require("./print");
+const { loadJson, doCmd } = require("../util/utils");
+const print = require("../util/print");
 const _ = require("lodash");
 const rmcb = require("rimraf");
 const util = require("util");
 const path = require("path");
-const { generateWebpackConfig } = require("./webpack/tool");
+const { generateWebpackConfig } = require("../webpack/tool");
 const webpack = require("webpack");
 
 const rm = util.promisify(rmcb);

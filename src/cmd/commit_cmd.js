@@ -1,9 +1,9 @@
 const inquirer = require('inquirer');
-const {  isGitRepo, getStatus, gitPush,getUnpushedCommits,gitAdd}  = require('./git');
+const {  isGitRepo, getStatus, gitPush,getUnpushedCommits,gitAdd}  = require('../git/git');
 const path = require('path');
 const standardVersion = require('standard-version')
 const bootstrap = require('commitizen/dist/cli/git-cz').bootstrap;
-const print = require('./print')
+const print = require('../util/print')
 
 function userCommit(){
   return bootstrap({

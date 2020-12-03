@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { doCmd } = require('./utils')
+const { doCmd } = require('./util/utils')
 
 async function serve(){
   const currentPath = path.resolve('./');

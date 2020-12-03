@@ -1,10 +1,11 @@
 const spawn = require('cross-spawn')
-const { GitError } = require('./errors')
-const { doCmd } = require('./utils')
+const { GitError } = require('../util/errors')
+const { doCmd } = require('../util/utils')
+const print = require('../util/print')
+
 const root = process.cwd()
 const isWin = process.platform === 'win32'
-const chalk = require('chalk')
-const print = require('./print')
+
 // git 拷贝操作
 async function gitClone(url, newName = '') {
   const data = await doCmd('git',['clone', url, newName, '--depth', 1], {stdio: 'inherit'})
