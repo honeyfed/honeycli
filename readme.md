@@ -1,7 +1,7 @@
-# tb-cli
+# honey-cli
 
-![GitHub](https://img.shields.io/github/license/tb-fed/tb-cli)
-![size](https://img.shields.io/github/repo-size/tb-fed/tb-cli)
+![GitHub](https://img.shields.io/github/license/honeyfed/honeycli)
+![size](https://img.shields.io/github/repo-size/honeyfed/honeycli)
 
 dont forget to ignore the node modules. ;-)
 
