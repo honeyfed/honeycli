@@ -13,7 +13,7 @@ async function formatCmd() {
     // parser: 'babel'
   };
   files.forEach(async (filepath) => {
-    print.info(`formatting ${filepath}...`);
+    print.info(`格式化 ${filepath}...`);
     const source = readFile(filepath);
     const ext = path.extname(filepath);
     prettierrc.parser = ext === ".vue" ? "vue" : "babel";

@@ -11,7 +11,7 @@ async function newCmd(templateName) {
     const templates = await loadTemplates()
 
     if (!templates) {
-      throw new Error('no templates found')
+      throw new Error('未找到模板')
     }
     // ask project name
     const options = await inquirer.prompt([
