@@ -3,23 +3,21 @@
 ![GitHub](https://img.shields.io/github/license/honeyfed/honeycli)
 ![size](https://img.shields.io/github/repo-size/honeyfed/honeycli)
 
-dont forget to ignore the node modules. ;-)
-
 ## how-tos
 
-### create a new project from template
+### 新建项目
 
 ```bash
-honey new <template-name>
+honey new
 ```
 
-### strict git commit
+### 提交代码
 
 ```bash
 honey commit
 ```
 
-### lint code
+### 校验代码
 
 ```bash
 honey lint
@@ -31,19 +29,19 @@ honey lint
 honey extend <command>
 ```
 
-### build project
+### 构建项目
 
 ```bash
 honey build
 ```
 
-### start development server
+### 本地调试
 
 ```bash
 honey dev
 ```
 
-### format code
+### 格式化代码
 
 ```bash
 honey format
@@ -51,9 +49,9 @@ honey format
 
 ## config
 
-honey config is put in project's package.json
+honeycli的配置写在项目的package.json里
 
-for example:
+如下：
 
 ```json
 {
@@ -63,11 +61,11 @@ for example:
 }
 ```
 
-### config options
+### 配置参数
 
 #### src
 
-source folder
+源码目录
 
 e.g.
 
@@ -81,7 +79,7 @@ e.g.
 
 #### dist
 
-source folder
+代码生成目录
 
 e.g.
 
@@ -95,6 +93,7 @@ e.g.
 
 #### static
 
+静态资源目录，目录中文件不会被编译，只会被复制到代码生成目录中
 static resource folder, will not be compiled, just been copied to dist folder
 
 e.g.
@@ -109,9 +108,13 @@ e.g.
 
 #### dev
 
-development options
+开发配置
 
-e.g.
+如下：
+
+- port 开发服务器监听端口
+- proxy 接口映射
+- mock mock文件
 
 ```json
 {
@@ -121,7 +124,7 @@ e.g.
       "proxy": [
         {
           "from": "/access",
-          "to": "https://wy-test.haina.com/access"
+          "to": "https://wy-test.haina.com"
         }
       ],
       "mock": "path to mock.js"
@@ -130,9 +133,9 @@ e.g.
 }
 ```
 
-#### how to write a mock file
+#### 如何编写mock文件
 
-e.g.
+如下：
 
 ```javascript
 module.exports = function(req, res) {

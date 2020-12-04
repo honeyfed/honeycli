@@ -16,7 +16,7 @@ function main() {
 
   program
     .version("1.0.0")
-    .command("new <template>")
+    .command("new")
     .alias("n")
     .description("创建新的项目")
     .action(newCmd);
