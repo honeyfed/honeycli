@@ -7,7 +7,7 @@ function loadProjectConfig() {}
 async function loadTemplates() {
   try {
     const data = await net.get(
-      "https://raw.githubusercontent.com/tb-fed/config/master/templates.json"
+      "https://raw.githubusercontent.com/honeyfed/config/master/templates.json"
     );
     const jsonData = JSON.parse(data);
     return jsonData;

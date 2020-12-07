@@ -1,9 +1,12 @@
-const { makeGithubUrlForTbTemplate, isValidName, rm } = require("../util/utils")
+const { makeGithubUrlForTbTemplate, isValidName, rm, getFiles } = require("../util/utils")
 const { gitClone } = require("../git/git")
 const {GitError} = require('../util/errors')
 const inquirer = require('inquirer')
 const { loadTemplates } = require("../util/config")
 const print = require('../util/print')
+const fs = require('fs')
+const path = require('path')
+const {renderInPlaceSync} = require('../util/template')
 
 async function newCmd(templateName) {
   
@@ -46,6 +49,21 @@ async function newCmd(templateName) {
       const githubUrl = makeGithubUrlForTbTemplate(options.template.name)
       await gitClone(githubUrl, options.projectName)
       await rm(options.projectName+'/.git')
+
+      // template render
+      const files = await getFiles(options.projectName+'/**/*')
+
+      files.forEach(file=> {
+        if (fs.lstatSync(file).isFile()) {
+          print.info(`正在写入${file}`)
+          const ext = path.extname(file)
+          if (/\.(txt|markdown|md|js|jsx|vue|html|json|less|css|scss|styl)$/i.test(ext)) {
+            renderInPlaceSync(file, {
+              name: options.projectName
+            })
+          }
+        }
+      })
     } else {
       throw new Error('invalid template: '+options.template.name)
     }

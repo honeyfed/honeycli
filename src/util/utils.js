@@ -5,7 +5,7 @@ const rmcb = require("rimraf");
 const util = require('util')
 const glob=require('glob')
 function makeGithubUrlForTbTemplate(templateName) {
-  return `https://github.com/tb-fed/template-${templateName}.git`
+  return `https://github.com/honeyfed/template-${templateName}.git`
 }
 
 function loadJson(filePath) {
