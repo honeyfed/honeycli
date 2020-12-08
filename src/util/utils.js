@@ -32,6 +32,10 @@ function isValidName(name) {
   return /^[a-zA-Z0-9-_]+$/.test(name)
 }
 
+function isValidLibName(name) {
+  return /^[a-z0-9-]+$/.test(name)
+}
+
 function doCmd(cmd, arr, std = {stdio: 'inherit'}) {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, arr, std)
@@ -69,6 +73,7 @@ module.exports = {
   makeGithubUrlForTbTemplate,
   loadJson,
   isValidName,
+  isValidLibName,
   doCmd,
   rm,
   readFile,

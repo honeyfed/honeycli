@@ -2,10 +2,11 @@
  * This module is based on webpack. It provides development and deploy features.
  */
 
-const { doCmd, rm } = require("../util/utils");
+const { doCmd, rm, isValidLibName } = require("../util/utils");
 const print = require("../util/print");
 const _ = require("lodash");
 const { generateWebpackConfig } = require("../webpack/config");
+const { generateWebpackLibConfig } = require("../webpack/libconfig");
 const { loadHoneyConfig } = require("../util/config");
 const webpack = require("webpack");
 
@@ -21,8 +22,26 @@ async function buildCmd() {
 
   try {
     await rm(config.dist);
+    let webpackConfig = null;
     //build
-    const webpackConfig = generateWebpackConfig(config);
+    if (config.isLib) {
+      // check lib option
+      if (!config.libName) {
+        print.error("请在package.json的honeyConfig里配置libName");
+        return;
+      }
+      if (!isValidLibName(config.libName)) {
+        print.error("libName必须遵循蛇形命名");
+        return;
+      }
+      if (!config.umdName) {
+        config.umdName = _.camelCase(config.libName);
+      }
+      webpackConfig = generateWebpackLibConfig(config);
+    } else {
+      webpackConfig = generateWebpackConfig(config);
+    }
+
     webpack(webpackConfig, (err, stats) => {
       if (err) throw err;
       process.stdout.write(

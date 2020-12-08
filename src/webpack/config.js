@@ -1,11 +1,8 @@
 const path = require("path");
-const { VueLoaderPlugin } = require("vue-loader");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const EslintWebpackPlugin = require("eslint-webpack-plugin");
-const { getEsLintOptions } = require("../lint/lint");
 // const UploadCdnPlugin = require('./uploadcdn.js')
+const { generateBasicWebpackConfig } = require("./baseconfig");
 
 function proxyConfigToDevServer(honeyConfig) {
   const proxyConfig = honeyConfig.dev.proxy;
@@ -32,114 +29,32 @@ function proxyConfigToDevServer(honeyConfig) {
 }
 
 function generateWebpackConfig(config, mode = "production") {
-  const webpackConfig = {
-    mode,
-    entry: path.resolve(config.src, config.entry),
-    output: {
-      path: config.dist,
-      filename: mode === "production" ? "[name].[hash:6].js" : "[name].js",
-      publicPath: "/",
-    },
-    resolve: {
-      extensions: [".js", ".vue", ".json"],
-      alias: {
-        "@": config.src,
-      },
-    },
-    resolveLoader: {
-      modules: [path.resolve(__dirname, "../../node_modules")],
-    },
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          loader: "babel-loader",
-          options: {
-            cwd: path.resolve(__dirname, "../../"),
-            presets: [
-              [
-                "@babel/preset-env",
-                {
-                  useBuiltIns: "usage",
-                  corejs: 3,
-                  targets: "> 0.25%, not dead",
-                },
-              ],
-            ],
-          },
-          exclude: /node_modules/,
-        },
-        {
-          test: /\.vue$/,
-          loader: "vue-loader",
-        },
-        {
-          test: /\.css$/,
-          use: ["style-loader", "css-loader"],
-        },
-        {
-          test: /\.less$/,
-          use: ["style-loader", "css-loader", "less-loader"],
-        },
-        {
-          test: /\.(ttf|woff)$/,
-          use: [
-            {
-              loader: "url-loader",
-              options: {
-                name:
-                  mode === "production"
-                    ? "fonts/[name]-[hash:6].[ext]"
-                    : "fonts/[name].[ext]",
-                limit: 8092,
-                esModule: false,
-              },
-            },
-          ],
-        },
-        {
-          test: /\.(gif|png|jpg|jpeg|svg)$/,
-          use: [
-            {
-              loader: "url-loader",
-              options: {
-                name:
-                  mode === "production"
-                    ? "imgs/[name]-[hash:6].[ext]"
-                    : "imgs/[name].[ext]",
-                limit: 8092,
-                esModule: false,
-              },
-            },
-          ],
-        },
-      ],
-    },
-    optimization: {
-      splitChunks: {
-        chunks: "all",
-      },
-    },
-    devtool: mode === "production" ? "none" : "eval-source-map",
-    devServer: {
-      port: config.port,
-      hot: true,
-      historyApiFallback: {
-        rewrites: [{ from: /.*/, to: "/index.html" }],
-      },
-      proxy: proxyConfigToDevServer(config),
-    },
-    plugins: [
-      new VueLoaderPlugin(),
-
-      new HtmlWebpackPlugin({
-        template: path.resolve(config.src, config.template),
-      }),
-      // new UploadCdnPlugin(),
-      new ProgressBarPlugin(),
-      new EslintWebpackPlugin(getEsLintOptions()),
-    ],
+  const webpackConfig = generateBasicWebpackConfig(config, mode);
+  webpackConfig.output = {
+    path: config.dist,
+    filename: mode === "production" ? "[name].[hash:6].js" : "[name].js",
+    publicPath: "/",
   };
+  webpackConfig.optimization = {
+    splitChunks: {
+      chunks: "all",
+    },
+  };
+
+  webpackConfig.devServer = {
+    port: config.port,
+    hot: true,
+    historyApiFallback: {
+      rewrites: [{ from: /.*/, to: "/index.html" }],
+    },
+    proxy: proxyConfigToDevServer(config),
+  };
+  webpackConfig.plugins.push(
+    new HtmlWebpackPlugin({
+      template: path.resolve(config.src, config.template),
+    })
+  );
+
   if (config.static) {
     webpackConfig.plugins.push(
       new CopyWebpackPlugin({

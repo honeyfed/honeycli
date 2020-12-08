@@ -106,6 +106,34 @@ e.g.
 }
 ```
 
+#### isLib
+
+是否为组件/库项目
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "isLib": true
+  }
+}
+```
+
+#### libName
+
+组件名（必须是蛇形命名, 如：dropdown-menu）
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "libName": "dropdown-menu"
+  }
+}
+```
+
 #### dev
 
 开发配置

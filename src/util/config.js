@@ -23,6 +23,7 @@ const defaultConfig = {
   entry: "index.js",
   template: "index.html",
   static: "",
+  isLib: false,
   dev: {
     port: 8080,
     proxy: [],
