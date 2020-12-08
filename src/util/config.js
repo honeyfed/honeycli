@@ -27,8 +27,8 @@ const defaultConfig = {
   dev: {
     port: 8080,
     proxy: [],
-    mock: ""
-  }
+    mock: "",
+  },
 };
 
 function loadHoneyConfig() {

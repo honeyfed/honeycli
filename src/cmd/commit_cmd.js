@@ -9,7 +9,7 @@ const path = require("path");
 const standardVersion = require("standard-version");
 const bootstrap = require("commitizen/dist/cli/git-cz").bootstrap;
 const print = require("../util/print");
-const {formatCmd}=require('./format_cmd')
+const { formatCmd } = require("./format_cmd");
 
 function userCommit() {
   return bootstrap(
