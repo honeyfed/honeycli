@@ -25,7 +25,7 @@ function readFile(filepath) {
 }
 
 function writeFile(filepath, content) {
-  fs.writeFileSync(filepath, content);
+  fs.writeFileSync(filepath, content, "utf8");
 }
 
 function isValidName(name) {

@@ -5,6 +5,7 @@
 const { doCmd, rm, writeFile } = require("../util/utils");
 const print = require("../util/print");
 const { getEslintrc } = require("../lint/lint");
+const {getPrettierrc} = require('../format/rc')
 const path = require("path");
 const { generateWebpackConfig } = require("../webpack/config");
 const { loadHoneyConfig } = require("../util/config");
@@ -21,7 +22,9 @@ async function devCmd() {
     rm(path.resolve(process.cwd(), ".eslintrc.js"));
     rm(path.resolve(process.cwd(), ".eslintrc.json"));
     rm(path.resolve(process.cwd(), ".eslintrc"));
+    rm(path.resolve(process.cwd(), ".prettierrc"));
     writeFile(path.resolve(process.cwd(), ".eslintrc.js"), getEslintrc());
+    writeFile(path.resolve(process.cwd(), ".prettierrc"), JSON.stringify(getPrettierrc()));
   } catch (err) {
     print.error(err);
   }

@@ -1,6 +1,7 @@
 const { loadHoneyConfig } = require("../util/config");
 const { getFiles, readFile, writeFile } = require("../util/utils");
 const print = require("../util/print");
+const {getPrettierrc} = require('../format/rc')
 const prettier = require("prettier");
 const path = require("path");
 async function formatCmd() {
@@ -9,9 +10,7 @@ async function formatCmd() {
   const vueFiles = await getFiles(config.src + "/**/*.vue");
   files = [...files, ...vueFiles];
 
-  const prettierrc = {
-    // parser: 'babel'
-  };
+  const prettierrc = getPrettierrc();
   files.forEach(async (filepath) => {
     print.info(`格式化 ${filepath}...`);
     const source = readFile(filepath);
@@ -19,7 +18,7 @@ async function formatCmd() {
     prettierrc.parser = ext === ".vue" ? "vue" : "babel";
     const formattedSource = prettier.format(source, prettierrc);
 
-    writeFile(filepath, formattedSource || "");
+    writeFile(filepath, (formattedSource || "").replaceAll('\r\n', '\n'));
   });
 }
 
