@@ -32,8 +32,8 @@ function generateWebpackConfig(config, mode = "production") {
   const webpackConfig = generateBasicWebpackConfig(config, mode);
   webpackConfig.output = {
     path: config.dist,
-    filename: mode === "production" ? "[name].[hash:6].js" : "[name].js",
-    publicPath: "/",
+    filename: mode === "production" ? "js/[name].[hash:6].js" : "js/[name].js",
+    publicPath: mode === "production" ? config.cdn || "/" : "/",
   };
   webpackConfig.optimization = {
     splitChunks: {

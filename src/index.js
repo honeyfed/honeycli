@@ -10,6 +10,7 @@ const { buildCmd } = require("./cmd/build_cmd");
 const { devCmd } = require("./cmd/dev_cmd");
 const { formatCmd } = require("./cmd/format_cmd");
 const { lintCmd } = require("./cmd/lint_cmd");
+const {cdnCmd}=require('./cmd/cdn_cmd');
 const print = require("./util/print");
 function main() {
   print.info("honey cli");
@@ -51,6 +52,13 @@ function main() {
     .action((cmd) => {
       // console.log(process.cwd())
       buildCmd();
+    });
+    program
+    .command("cdn")
+    .description("资源上传cdn")
+    .action((cmd) => {
+      // console.log(process.cwd())
+      cdnCmd();
     });
   program
     .command("dev")

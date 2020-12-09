@@ -5,6 +5,9 @@ function info(message) {
 }
 
 function error(message) {
+  if (typeof message === "object") {
+    message = JSON.stringify(message);
+  }
   console.log(chalk.red(message));
 }
 

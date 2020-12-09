@@ -48,6 +48,10 @@ function loadHoneyConfig() {
   if (config.static) {
     config.static = path.resolve(process.cwd(), config.static);
   }
+
+  if (packageJson.name) {
+    config.packageName = packageJson.name
+  }
   return config;
 }
 

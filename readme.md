@@ -134,6 +134,20 @@ e.g.
 }
 ```
 
+#### cdn
+
+配置cdn地址
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "cdn": "https://static.xx.com"
+  }
+}
+```
+
 #### dev
 
 开发配置
