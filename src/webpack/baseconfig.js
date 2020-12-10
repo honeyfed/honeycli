@@ -20,7 +20,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           loader: "babel-loader",
           options: {
             cwd: getPathInLib("./"),
@@ -33,6 +33,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
                   targets: "> 0.25%, not dead",
                 },
               ],
+              "@babel/preset-react"
             ],
           },
           exclude: /node_modules/,
