@@ -12,8 +12,12 @@ const { formatCmd } = require("./cmd/format_cmd");
 const { lintCmd } = require("./cmd/lint_cmd");
 const {cdnCmd}=require('./cmd/cdn_cmd');
 const print = require("./util/print");
+const {loadJson}=require('./util/utils');
+const path = require('path');
+const {getPathInLib} = require('./dir')
 function main() {
-  print.info("honey cli");
+  const packageJson = loadJson(getPathInLib('./package.json'));
+  print.info(`honey cli v${packageJson.version}`);
 
   program
     .version("1.0.0")

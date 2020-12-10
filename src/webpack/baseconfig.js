@@ -3,7 +3,7 @@ const { VueLoaderPlugin } = require("vue-loader");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const { getEsLintOptions } = require("../lint/lint");
-
+const {getPathInLib}=require('../dir')
 function generateBasicWebpackConfig(config, mode = "production") {
   const webpackConfig = {
     mode,
@@ -15,7 +15,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
       },
     },
     resolveLoader: {
-      modules: [path.resolve(__dirname, "../../node_modules")],
+      modules: [getPathInLib("./node_modules")],
     },
     module: {
       rules: [
@@ -23,7 +23,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
           test: /\.js$/,
           loader: "babel-loader",
           options: {
-            cwd: path.resolve(__dirname, "../../"),
+            cwd: getPathInLib("./"),
             presets: [
               [
                 "@babel/preset-env",

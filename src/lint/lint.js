@@ -1,4 +1,5 @@
 const path = require("path");
+const {getPathInLib}=require('../dir')
 function getEslintrc() {
   return `
   module.exports = {
@@ -16,7 +17,7 @@ function getEsLintOptions() {
     fix: true,
     extensions: [".js", ".jsx", ".vue"],
     useEslintrc: false,
-    overrideConfigFile: path.resolve(__dirname, "./eslintrc.js"),
+    overrideConfigFile: getPathInLib("./config/eslintrc.js"),
   };
 }
 

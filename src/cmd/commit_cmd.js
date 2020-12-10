@@ -10,14 +10,14 @@ const standardVersion = require("standard-version");
 const bootstrap = require("commitizen/dist/cli/git-cz").bootstrap;
 const print = require("../util/print");
 const { formatCmd } = require("./format_cmd");
-
+const {getPathInLib}=require('../dir')
 function userCommit() {
   return bootstrap(
     {
-      cliPath: path.join(__dirname, "../node_modules/commitizen"),
+      cliPath: getPathInLib('./node_modules/commitizen'),
       // this is new
       config: {
-        path: path.resolve(__dirname, "../3rd/cz-conventional-changelog"),
+        path: getPathInLib('./3rd/cz-conventional-changelog'),
       },
     },
     ""
