@@ -6,8 +6,8 @@ function getEslintrc() {
     env: {
       browser: true,
     },
-    extends: ["plugin:vue/essential", 'eslint-config-tencent'],
-    plugins: ["vue"],
+    extends: ["plugin:vue/essential","plugin:react/recommended","eslint-config-tencent"],
+    plugins: ["vue","react"],
   };
   `;
 }
