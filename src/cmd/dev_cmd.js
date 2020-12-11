@@ -5,7 +5,7 @@
 const { doCmd, rm, writeFile } = require("../util/utils");
 const print = require("../util/print");
 const { getEslintrc } = require("../lint/lint");
-const {getPrettierrc} = require('../format/rc')
+const { getPrettierrc } = require("../format/rc");
 const path = require("path");
 const { generateWebpackConfig } = require("../webpack/config");
 const { loadHoneyConfig } = require("../util/config");
@@ -14,17 +14,26 @@ const webpackDevServer = require("webpack-dev-server");
 
 async function devCmd() {
   try {
-    await doCmd("npm",['i','--save','core-js@3']);
-    await doCmd(
-      "npm", ['i','--save-dev','--force','eslint','eslint-plugin-vue','eslint-config-tencent']
-    );
+    await doCmd("npm", ["i", "--save", "core-js@3"]);
+    await doCmd("npm", ["i", "--save", "regenerator-runtime"]);
+    await doCmd("npm", [
+      "i",
+      "--save-dev",
+      "--force",
+      "eslint",
+      "eslint-plugin-vue",
+      "eslint-config-tencent",
+    ]);
     await doCmd("npm", ["i"]);
     rm(path.resolve(process.cwd(), ".eslintrc.js"));
     rm(path.resolve(process.cwd(), ".eslintrc.json"));
     rm(path.resolve(process.cwd(), ".eslintrc"));
     rm(path.resolve(process.cwd(), ".prettierrc"));
     writeFile(path.resolve(process.cwd(), ".eslintrc.js"), getEslintrc());
-    writeFile(path.resolve(process.cwd(), ".prettierrc"), JSON.stringify(getPrettierrc()));
+    writeFile(
+      path.resolve(process.cwd(), ".prettierrc"),
+      JSON.stringify(getPrettierrc())
+    );
   } catch (err) {
     print.error(err);
   }

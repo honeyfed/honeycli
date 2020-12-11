@@ -41,8 +41,9 @@ function asyncWebpackBuild(webpackConfig) {
 
 async function buildCmd() {
   try {
-    await doCmd("npm", ['i','--save','core-js@3']);
-    await doCmd("npm",['i']);
+    await doCmd("npm", ["i", "--save", "core-js@3"]);
+    await doCmd("npm", ["i", "--save", "regenerator-runtime"]);
+    await doCmd("npm", ["i"]);
   } catch (err) {
     print.error(err);
   }
