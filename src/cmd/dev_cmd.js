@@ -22,6 +22,7 @@ async function devCmd() {
       "--force",
       "eslint",
       "eslint-plugin-vue",
+      "eslint-plugin-react",
       "eslint-config-tencent",
     ]);
     await doCmd("npm", ["i"]);
