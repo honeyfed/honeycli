@@ -9,7 +9,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
     mode,
     entry: path.resolve(config.src, config.entry),
     resolve: {
-      extensions: [".js", ".vue", ".json"],
+      extensions: [".js", ".jsx", ".vue", ".json"],
       alias: {
         "@": config.src,
       },
