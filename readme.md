@@ -5,6 +5,12 @@
 
 ## how-tos
 
+### 升级cli
+
+```bash
+honey upgrade
+```
+
 ### 新建项目
 
 ```bash
