@@ -40,7 +40,7 @@ function doCmd(cmd, arr, std = { stdio: "inherit" }) {
   return new Promise((resolve, reject) => {
     if (process.platform === 'win32'){
       if (cmd.indexOf('npm') === 0) {
-        cmd = 'npm.cmd' + cmd.slice(3)
+        cmd = 'npm.cmd'
       }
     }
     const child = spawn(cmd, arr, std);

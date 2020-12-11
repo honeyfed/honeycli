@@ -14,11 +14,11 @@ const webpackDevServer = require("webpack-dev-server");
 
 async function devCmd() {
   try {
-    await doCmd("npm i --save core-js@3");
+    await doCmd("npm",['i','--save','core-js@3']);
     await doCmd(
-      "npm i --save-dev --force eslint eslint-plugin-vue eslint-config-tencent"
+      "npm", ['i','--save-dev','--force','eslint','eslint-plugin-vue','eslint-config-tencent']
     );
-    await doCmd("npm i");
+    await doCmd("npm", ["i"]);
     rm(path.resolve(process.cwd(), ".eslintrc.js"));
     rm(path.resolve(process.cwd(), ".eslintrc.json"));
     rm(path.resolve(process.cwd(), ".eslintrc"));
