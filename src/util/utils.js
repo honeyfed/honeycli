@@ -38,7 +38,9 @@ function isValidLibName(name) {
 
 function doCmd(cmd, arr, std = { stdio: "inherit" }) {
   return new Promise((resolve, reject) => {
-    const child = spawn(cmd, arr, std);
+    const child = spawn(cmd, arr, std, {
+      shell: process.platform === 'win32'
+    });
     if (std.stdio) {
       child.on("close", (code) => {
         resolve({ code });
