@@ -11,6 +11,7 @@ const { devCmd } = require("./cmd/dev_cmd");
 const { formatCmd } = require("./cmd/format_cmd");
 const { lintCmd } = require("./cmd/lint_cmd");
 const {cdnCmd}=require('./cmd/cdn_cmd');
+const {upgradeCmd}=require('./cmd/upgrade_cmd')
 const print = require("./util/print");
 const {loadJson}=require('./util/utils');
 const path = require('path');
@@ -20,7 +21,7 @@ function main() {
   print.info(`honey cli v${packageJson.version}`);
 
   program
-    .version("1.0.0")
+    .version(packageJson.version)
     .command("new")
     .alias("n")
     .description("创建新的项目")
@@ -93,11 +94,11 @@ function main() {
       print.info(cmd);
     });
   program
-    .command("serve")
-    .alias("s")
-    .description("run dev serve")
+    .command("upgrade")
+    .alias("u")
+    .description("检查最新版本honey-cli")
     .action((cmd) => {
-      serve();
+      upgradeCmd();
     });
 
   program.parse(process.argv);
