@@ -16,7 +16,7 @@ function proxyConfigToDevServer(honeyConfig) {
           cookieDomainRewrite: "localhost",
         };
         if (honeyConfig.dev.mock) {
-          const mockFunction = require(path.resolve(
+          const mockFunction = __non_webpack_require__(path.resolve(
             process.cwd(),
             honeyConfig.dev.mock
           ));

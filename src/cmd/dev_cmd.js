@@ -26,10 +26,10 @@ async function devCmd() {
       "eslint-config-tencent",
     ]);
     await doCmd("npm", ["i"]);
-    rm(path.resolve(process.cwd(), ".eslintrc.js"));
-    rm(path.resolve(process.cwd(), ".eslintrc.json"));
-    rm(path.resolve(process.cwd(), ".eslintrc"));
-    rm(path.resolve(process.cwd(), ".prettierrc"));
+    await rm(path.resolve(process.cwd(), ".eslintrc.js"));
+    await rm(path.resolve(process.cwd(), ".eslintrc.json"));
+    await rm(path.resolve(process.cwd(), ".eslintrc"));
+    await rm(path.resolve(process.cwd(), ".prettierrc"));
     writeFile(path.resolve(process.cwd(), ".eslintrc.js"), getEslintrc());
     writeFile(
       path.resolve(process.cwd(), ".prettierrc"),
