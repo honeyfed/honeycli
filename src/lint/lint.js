@@ -22,6 +22,7 @@ function getEsLintOptions() {
     fix: true,
     extensions: [".js", ".jsx", ".vue"],
     useEslintrc: false,
+    errorOnUnmatchedPattern: false,
     overrideConfigFile: getPathInLib("./config/eslintrc.js"),
   };
 }

@@ -62,10 +62,11 @@ function doCmd(cmd, arr, std = { stdio: "inherit" }) {
 const rm = util.promisify(rmcb);
 
 function getFiles(pattern) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     glob(pattern, (err, files) => {
       if (err) {
-        reject(err);
+        print.error(err&&err.message)
+        resolve([]);
       } else {
         resolve(files);
       }

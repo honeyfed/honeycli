@@ -7,6 +7,7 @@ async function lintCmd() {
   const results = await eslint.lintFiles([
     config.src + "/**/*.vue",
     config.src + "/**/*.js",
+    config.src + "/**/*.jsx",
   ]);
   await ESLint.outputFixes(results);
   const formatter = await eslint.loadFormatter("stylish");
