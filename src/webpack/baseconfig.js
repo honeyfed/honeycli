@@ -4,7 +4,32 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
 const { getEsLintOptions } = require("../lint/lint");
 const {getPathInLib}=require('../dir')
+const {browserslistrc} = require('../caniuse/browserslist')
 function generateBasicWebpackConfig(config, mode = "production") {
+
+  const postCssLoader = {
+    loader: 'postcss-loader',
+    options: {
+      // ident: 'postcss',
+      postcssOptions: {
+        plugins: [
+          __non_webpack_require__('postcss-preset-env')({
+            browsers: browserslistrc
+          })
+        ]
+      }
+    }
+  }
+
+  if (config.rem) {
+    postCssLoader.options.postcssOptions.plugins.push(__non_webpack_require__('postcss-pxtorem')({
+      rootValue: 100,
+      unitPrecision: 8,
+      propList: ['*']
+    }))
+  }
+
+
   const webpackConfig = {
     mode,
     entry: path.resolve(config.src, config.entry),
@@ -30,7 +55,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
                 {
                   useBuiltIns: "usage",
                   corejs: 3,
-                  targets: "> 0.25%, not dead",
+                  targets: browserslistrc,
                 },
               ],
               "@babel/preset-react"
@@ -44,11 +69,11 @@ function generateBasicWebpackConfig(config, mode = "production") {
         },
         {
           test: /\.css$/,
-          use: ["style-loader", "css-loader"],
+          use: ["style-loader", "css-loader", postCssLoader],
         },
         {
           test: /\.less$/,
-          use: ["style-loader", "css-loader", "less-loader"],
+          use: ["style-loader", "css-loader",postCssLoader, "less-loader"],
         },
         {
           test: /\.(ttf|woff)$/,

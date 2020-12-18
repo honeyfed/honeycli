@@ -55,7 +55,7 @@ honey format
 
 ## config
 
-honeycli的配置写在项目的package.json里
+**honeycli**的配置写在项目的*package.json*里
 
 如下：
 
@@ -100,7 +100,6 @@ e.g.
 #### static
 
 静态资源目录，目录中文件不会被编译，只会被复制到代码生成目录中
-static resource folder, will not be compiled, just been copied to dist folder
 
 e.g.
 
@@ -128,7 +127,7 @@ e.g.
 
 #### libName
 
-组件名（必须是蛇形命名, 如：dropdown-menu）
+组件名（必须是蛇形命名, 如：**dropdown-menu**）
 
 e.g.
 
@@ -154,15 +153,29 @@ e.g.
 }
 ```
 
+#### rem
+
+是否自动转换px为rem, 默认为*false*
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "rem": true
+  }
+}
+```
+
 #### dev
 
 开发配置
 
 如下：
 
-- port 开发服务器监听端口
-- proxy 接口映射
-- mock mock文件
+- *port* 开发服务器监听端口
+- *proxy* 接口映射
+- *mock* mock文件
 
 ```json
 {
