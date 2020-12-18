@@ -3,6 +3,8 @@
 ![GitHub](https://img.shields.io/github/license/honeyfed/honeycli)
 ![size](https://img.shields.io/github/repo-size/honeyfed/honeycli)
 
+[TOC]
+
 ## how-tos
 
 ### 升级cli
