@@ -11,6 +11,8 @@ const { generateWebpackConfig } = require("../webpack/config");
 const { loadHoneyConfig } = require("../util/config");
 const webpack = require("webpack");
 const webpackDevServer = require("webpack-dev-server");
+const chokidar = require('chokidar')
+const _ = require('lodash')
 
 async function devCmd() {
   try {
@@ -41,19 +43,40 @@ async function devCmd() {
 
   const config = loadHoneyConfig();
 
-  try {
-    //build
-    const webpackConfig = generateWebpackConfig(config, "development");
-    const server = new webpackDevServer(
-      webpack(webpackConfig),
-      webpackConfig.devServer
-    );
-    server.listen(config.dev.port, "0.0.0.0", () => {
-      print.info(`Starting server on http://localhost:${config.dev.port}`);
-    });
-  } catch (err) {
-    print.error(err);
+  let server = await webpackDev(config)
+
+  if (config.dev && config.dev.mock) {
+    const mockfile = path.resolve(process.cwd(), config.dev.mock)
+
+    chokidar.watch(mockfile).on('change', _.throttle(() => {
+      const tmpServer = server
+      server = null
+      tmpServer && tmpServer.close(async ()=>{
+        server = await webpackDev(config)
+      })
+    }, 2000, {leading: true, trailing: false}))
   }
+}
+
+function webpackDev(config) {
+  return new Promise(resolve=>{
+    try {
+      //build
+      const webpackConfig = generateWebpackConfig(config, "development");
+      const server = new webpackDevServer(
+        webpack(webpackConfig),
+        webpackConfig.devServer
+      );
+      server.listen(config.dev.port, "0.0.0.0", () => {
+        print.info(`Starting server on http://localhost:${config.dev.port}`);
+        resolve(server);
+      });
+    } catch (err) {
+      print.error(err);
+      resolve(null);
+    }
+  })
+  
 }
 
 module.exports = {

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 // const UploadCdnPlugin = require('./uploadcdn.js')
 const { generateBasicWebpackConfig } = require("./baseconfig");
-
+const print = require('../util/print')
 function proxyConfigToDevServer(honeyConfig) {
   const proxyConfig = honeyConfig.dev.proxy;
   const devProxyConfig = {};
@@ -16,11 +16,19 @@ function proxyConfigToDevServer(honeyConfig) {
           cookieDomainRewrite: "localhost",
         };
         if (honeyConfig.dev.mock) {
-          const mockFunction = __non_webpack_require__(path.resolve(
+          const mockfile = path.resolve(
             process.cwd(),
             honeyConfig.dev.mock
-          ));
-          devProxyConfig[config.from].bypass = mockFunction;
+          )
+          delete __non_webpack_require__.cache[__non_webpack_require__.resolve(mockfile)]
+          try {
+            const mockFunction = __non_webpack_require__(mockfile);
+            devProxyConfig[config.from].bypass = mockFunction;
+          } catch (err) {
+            print.error(err && err.message)
+            print.error('mock文件加载错误')
+          }
+          
         }
       }
     });

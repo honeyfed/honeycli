@@ -2,6 +2,7 @@ const net = require("./net");
 const { loadJson } = require("./utils");
 const path = require("path");
 const _ = require("lodash");
+const print= require('./print')
 function loadProjectConfig() {}
 
 async function loadTemplates() {
