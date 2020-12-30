@@ -1,6 +1,6 @@
 {
-  "name": "honey-cli2",
-  "version": "1.6.9",
+  "name": "@tencent/honey-cli2",
+  "version": "1.6.10",
   "description": "a frontend cli toolkit",
   "main": "cli.js",
   "bin": {

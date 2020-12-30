@@ -1,6 +1,8 @@
 const path = require("path");
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpackUtil = require('./util')
 // const UploadCdnPlugin = require('./uploadcdn.js')
 const { generateBasicWebpackConfig } = require("./baseconfig");
 const print = require('../util/print')
@@ -39,9 +41,9 @@ function proxyConfigToDevServer(honeyConfig) {
 function generateWebpackConfig(config, mode = "production") {
   const webpackConfig = generateBasicWebpackConfig(config, mode);
   webpackConfig.output = {
-    path: config.dist,
+    path: config.appPath? path.resolve(config.dist, webpackUtil.urlToRelatedDir(config.appPath)): config.dist,
     filename: mode === "production" ? "js/[name].[hash:6].js" : "js/[name].js",
-    publicPath: mode === "production" ? config.cdn || "/" : "/",
+    publicPath: config.appPath ? webpackUtil.fixUrlSuffix(config.appPath) : "/",
   };
   webpackConfig.optimization = {
     splitChunks: {
@@ -52,8 +54,9 @@ function generateWebpackConfig(config, mode = "production") {
   webpackConfig.devServer = {
     port: config.port,
     hot: true,
+    publicPath: config.appPath ? webpackUtil.fixUrlSuffix(config.appPath) : "/",
     historyApiFallback: {
-      rewrites: [{ from: /.*/, to: "/index.html" }],
+      rewrites: [{ from: /.*/, to: webpackUtil.fixUrlSuffix(config.appPath || '/')+"index.html" }],
     },
     proxy: proxyConfigToDevServer(config),
   };
@@ -74,6 +77,14 @@ function generateWebpackConfig(config, mode = "production") {
         ],
       })
     );
+  }
+
+  if (config.appPath) {
+    webpackConfig.plugins.push(
+      new webpack.DefinePlugin({
+        APPPATH: JSON.stringify(config.appPath)
+      })
+    )
   }
   return webpackConfig;
 }

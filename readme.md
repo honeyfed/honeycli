@@ -155,6 +155,20 @@ e.g.
 }
 ```
 
+#### appPath
+
+配置应用路径
+
+e.g.
+
+```json
+{
+  "honeyConfig": {
+    "appPath": "/pc"
+  }
+}
+```
+
 #### rem
 
 是否自动转换px为rem, 默认为*false*
