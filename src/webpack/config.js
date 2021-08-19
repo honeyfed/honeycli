@@ -30,7 +30,7 @@ function proxyConfigToDevServer(honeyConfig) {
             print.error(err && err.message)
             print.error('mock文件加载错误')
           }
-          
+
         }
       }
     });
@@ -59,6 +59,7 @@ function generateWebpackConfig(config, mode = "production") {
       rewrites: [{ from: /.*/, to: webpackUtil.fixUrlSuffix(config.appPath || '/')+"index.html" }],
     },
     proxy: proxyConfigToDevServer(config),
+    headers: config.headers ? config.headers : null
   };
   webpackConfig.plugins.push(
     new HtmlWebpackPlugin({

@@ -41,10 +41,9 @@ async function devCmd() {
     print.error(err);
   }
 
+  print.info('begin build');
   const config = loadHoneyConfig();
-
   let server = await webpackDev(config)
-
   if (config.dev && config.dev.mock) {
     const mockfile = path.resolve(process.cwd(), config.dev.mock)
 
@@ -72,11 +71,11 @@ function webpackDev(config) {
         resolve(server);
       });
     } catch (err) {
-      print.error(err);
+      print.error('server'+err);
       resolve(null);
     }
   })
-  
+
 }
 
 module.exports = {

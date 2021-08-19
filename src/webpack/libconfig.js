@@ -8,6 +8,7 @@ function generateWebpackLibConfig(config) {
     filename: `${config.libName}.min.js`,
     library: config.umdName,
     libraryTarget: "umd",
+    jsonpFunction: config.jsonpFunction ? config.jsonpFunction : null,
   };
 
   return webpackConfig;

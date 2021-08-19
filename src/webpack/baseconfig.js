@@ -76,7 +76,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
           use: ["style-loader", "css-loader",postCssLoader, "less-loader"],
         },
         {
-          test: /\.(ttf|woff)$/,
+          test: /\.(ttf|woff|eot)$/,
           use: [
             {
               loader: "url-loader",
