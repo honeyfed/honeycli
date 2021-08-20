@@ -45,6 +45,11 @@ function generateWebpackConfig(config, mode = "production") {
     filename: mode === "production" ? "js/[name].[hash:6].js" : "js/[name].js",
     publicPath: config.appPath ? webpackUtil.fixUrlSuffix(config.appPath) : "/",
   };
+  if(config.isQianKun){
+    webpackConfig.output.library = config.umdName
+    webpackConfig.output.libraryTarget = "umd"
+    webpackConfig.output.jsonpFunction = config.jsonpFunction ? config.jsonpFunction : null
+  }
   webpackConfig.optimization = {
     splitChunks: {
       chunks: "all",
@@ -59,7 +64,7 @@ function generateWebpackConfig(config, mode = "production") {
       rewrites: [{ from: /.*/, to: webpackUtil.fixUrlSuffix(config.appPath || '/')+"index.html" }],
     },
     proxy: proxyConfigToDevServer(config),
-    headers: config.headers ? config.headers : null
+    headers: config.headers ? config.headers : {}
   };
   webpackConfig.plugins.push(
     new HtmlWebpackPlugin({
