@@ -32,18 +32,28 @@ async function devCmd() {
     await rm(path.resolve(process.cwd(), ".eslintrc.json"));
     await rm(path.resolve(process.cwd(), ".eslintrc"));
     await rm(path.resolve(process.cwd(), ".prettierrc"));
-    writeFile(path.resolve(process.cwd(), ".eslintrc.js"), getEslintrc());
-    writeFile(
-      path.resolve(process.cwd(), ".prettierrc"),
-      JSON.stringify(getPrettierrc())
-    );
   } catch (err) {
     print.error(err);
   }
 
   print.info('begin build');
   const config = loadHoneyConfig();
+  try {
+    if(config.isReact){
+      writeFile(path.resolve(process.cwd(), ".eslintrc.js"), getEslintrc(1));
+    } else {
+      writeFile(path.resolve(process.cwd(), ".eslintrc.js"), getEslintrc(0));
+    }
+    writeFile(
+      path.resolve(process.cwd(), ".prettierrc"),
+      JSON.stringify(getPrettierrc())
+    );
+  } catch (err){
+    print.error(err);
+  }
   let server = await webpackDev(config)
+
+
   if (config.dev && config.dev.mock) {
     const mockfile = path.resolve(process.cwd(), config.dev.mock)
 
