@@ -23,7 +23,9 @@ async function devCmd() {
       "--save-dev",
       "--force",
       "eslint",
+      "prettier",
       "eslint-plugin-vue",
+      "eslint-plugin-prettier",
       "eslint-plugin-react",
       "eslint-config-tencent",
     ]);

@@ -13,8 +13,11 @@ function getEslintrc(type = 0 ) {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  extends: ['plugin:vue/essential', 'eslint-config-tencent'],
-  plugins: ['vue', 'react'],
+  extends: ['plugin:vue/essential', 'eslint-config-tencent', 'eslint-config-tencent/prettier'],
+  plugins: ['vue', 'react', 'prettier'],
+  rules: {
+    indent: ['off'],
+  },
 };`;
   } else {
     return `module.exports = {
@@ -31,8 +34,11 @@ function getEslintrc(type = 0 ) {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  extends: ['plugin:react/recommended', 'eslint-config-tencent'],
-  plugins: ['vue', 'react'],
+  extends: ['plugin:react/recommended', 'eslint-config-tencent', 'eslint-config-tencent/prettier'],
+  plugins: ['vue', 'react', 'prettier'],
+    rules: {
+    indent: ['off'],
+  },
 };`;
   }
 
