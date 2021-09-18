@@ -115,6 +115,7 @@ function generateBasicWebpackConfig(config, mode = "production") {
       new ProgressBarPlugin(),
       new EslintWebpackPlugin(getEsLintOptions()),
     ],
+    externals: config.externals || {}
   };
   return webpackConfig;
 }
