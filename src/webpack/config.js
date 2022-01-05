@@ -66,6 +66,11 @@ function generateWebpackConfig(config, mode = "production") {
     proxy: proxyConfigToDevServer(config),
     headers: config.headers ? config.headers : {}
   };
+  if(config.client && config.client.webSocketURL){
+    webpackConfig.devServer.sockPort = config.client.webSocketURL.port || 8080
+    webpackConfig.devServer.sockHost = config.client.webSocketURL.hostname || undefined
+    webpackConfig.devServer.sockPath = config.client.webSocketURL.pathname || undefined
+  }
   webpackConfig.plugins.push(
     new HtmlWebpackPlugin({
       template: path.resolve(config.src, config.template),
