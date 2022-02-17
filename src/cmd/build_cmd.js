@@ -2,14 +2,15 @@
  * This module is based on webpack. It provides development and deploy features.
  */
 
-const { doCmd, rm, isValidLibName } = require("../util/utils");
-const print = require("../util/print");
-const _ = require("lodash");
-const { generateWebpackConfig } = require("../webpack/config");
-const { generateWebpackLibConfig } = require("../webpack/libconfig");
-const { loadHoneyConfig } = require("../util/config");
-const webpack = require("webpack");
-const { cdnCmd } = require("./cdn_cmd");
+const { doCmd, rm, isValidLibName } = require('../util/utils');
+const print = require('../util/print');
+const _ = require('lodash');
+const { generateWebpackConfig } = require('../webpack/config');
+const { generateWebpackLibConfig } = require('../webpack/libconfig');
+const { loadHoneyConfig, translateHoneyConfigToVite } = require('../util/config');
+const webpack = require('webpack');
+const { build } = require('vite');
+const { cdnCmd } = require('./cdn_cmd');
 
 function asyncWebpackBuild(webpackConfig) {
   return new Promise((resolve, reject) => {
@@ -25,15 +26,15 @@ function asyncWebpackBuild(webpackConfig) {
           children: false, // If you are using ts-loader, setting this to true will make TypeScript errors show up during build.
           chunks: false,
           chunkModules: false,
-        }) + "\n\n"
+        }) + '\n\n'
       );
 
       if (stats.hasErrors()) {
-        print.error("  Build failed with errors.\n");
+        print.error('  Build failed with errors.\n');
         process.exit(1);
       }
 
-      print.info("  Build complete.\n");
+      print.info('  Build complete.\n');
       resolve();
     });
   });
@@ -41,9 +42,9 @@ function asyncWebpackBuild(webpackConfig) {
 
 async function buildCmd() {
   try {
-    await doCmd("npm", ["i", "--save", "core-js@3"]);
-    await doCmd("npm", ["i", "--save", "regenerator-runtime"]);
-    await doCmd("npm", ["i"]);
+    await doCmd('npm', ['i', '--save', 'core-js@3']);
+    await doCmd('npm', ['i', '--save', 'regenerator-runtime']);
+    await doCmd('npm', ['i']);
   } catch (err) {
     print.error(err);
   }
@@ -52,27 +53,39 @@ async function buildCmd() {
 
   try {
     await rm(config.dist);
-    let webpackConfig = null;
-    //build
-    if (config.isLib) {
-      // check lib option
-      if (!config.libName) {
-        print.error("请在package.json的honeyConfig里配置libName");
-        return;
-      }
-      if (!isValidLibName(config.libName)) {
-        print.error("libName必须遵循蛇形命名");
-        return;
-      }
-      if (!config.umdName) {
-        config.umdName = _.camelCase(config.libName);
-      }
-      webpackConfig = generateWebpackLibConfig(config);
+    // 分不同类型构建
+    if (config.useVite) {
+      // vite 构建
+      const viteConfig = translateHoneyConfigToVite(config, 'production');
+      await build({
+        ...viteConfig,
+        mode: 'production',
+        configFile: false,
+      });
     } else {
-      webpackConfig = generateWebpackConfig(config);
-    }
+      // webpack 构建
+      let webpackConfig = null;
+      //build
+      if (config.isLib) {
+        // check lib option
+        if (!config.libName) {
+          print.error('请在package.json的honeyConfig里配置libName');
+          return;
+        }
+        if (!isValidLibName(config.libName)) {
+          print.error('libName必须遵循蛇形命名');
+          return;
+        }
+        if (!config.umdName) {
+          config.umdName = _.camelCase(config.libName);
+        }
+        webpackConfig = generateWebpackLibConfig(config);
+      } else {
+        webpackConfig = generateWebpackConfig(config);
+      }
 
-    await asyncWebpackBuild(webpackConfig);
+      await asyncWebpackBuild(webpackConfig);
+    }
 
     if (config.cdn) {
       await cdnCmd();

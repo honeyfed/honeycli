@@ -1,9 +1,9 @@
-const path=require('path')
+const path = require('path');
 
 function getPathInLib(relativePath) {
-  return path.resolve(__dirname, '../' ,relativePath)
+  return path.resolve(__dirname, '../', relativePath);
 }
 
 module.exports = {
-  getPathInLib
-}
+  getPathInLib,
+};

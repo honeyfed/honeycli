@@ -1,6 +1,6 @@
 {
   "name": "honey-cli3",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "description": "a frontend cli toolkit",
   "main": "cli.js",
   "bin": {
@@ -63,6 +63,7 @@
     "superagent": "^6.1.0",
     "superagent-proxy": "^2.0.0",
     "url-loader": "^4.1.1",
+    "vite": "^2.8.3",
     "vue-loader": "^15.9.5",
     "vue-template-compiler": "^2.6.12",
     "webpack": "^4.44.2",
