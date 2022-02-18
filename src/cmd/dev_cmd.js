@@ -18,7 +18,7 @@ const _ = require('lodash');
 async function devCmd(cmd) {
   // 读取 package.json 中配置
   const config = loadHoneyConfig();
-  const { useVite, isReact } = config;
+  const { useVite, isReact, isVue3 } = config;
 
   if (!cmd.fast) {
     try {
@@ -40,7 +40,7 @@ async function devCmd(cmd) {
         if (isReact) {
           // react
           await doCmd('npm', ['i', '@vitejs/plugin-react']);
-        } else if (config.isVue3) {
+        } else if (isVue3) {
           // vue3
           await doCmd('npm', ['i', '@vitejs/plugin-vue', '@vitejs/plugin-vue-jsx']);
         } else {
@@ -92,7 +92,6 @@ async function devCmd(cmd) {
   // 监听 mock 修改实现热更新
   if (config.dev && config.dev.mock) {
     const mockFile = path.resolve(process.cwd(), config.dev.mock);
-
     chokidar.watch(mockFile).on(
       'change',
       _.throttle(

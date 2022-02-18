@@ -101,9 +101,9 @@ function translateHoneyConfigToVite(honeyConfig, mode = 'development') {
       config['server']['proxy'] = proxyConfig;
     }
   }
-  // 生产模式配置
+  // for prod
   if (mode === 'production') {
-    config['outDir'] = honeyConfig.dist;
+    config['build'] = { outDir: honeyConfig.dist };
   }
 
   return defineConfig(config);
