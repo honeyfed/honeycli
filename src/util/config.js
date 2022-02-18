@@ -4,9 +4,6 @@ const path = require('path');
 const _ = require('lodash');
 const print = require('./print');
 const { defineConfig } = require('vite');
-// const vue3Plugin = require('@vitejs/plugin-vue');
-// const vueJsx = require('@vitejs/plugin-vue-jsx');
-// const { createVuePlugin } = require('vite-plugin-vue2');
 function loadProjectConfig() {}
 
 async function loadTemplates() {
@@ -40,8 +37,6 @@ function loadHoneyConfig() {
   const config = {};
   _.merge(config, defaultConfig);
   if (packageJson && packageJson.honeyConfig) {
-    // console.log(packageJson.honeyConfig)
-
     _.merge(config, packageJson.honeyConfig);
   } else {
     print.info('no config found');
@@ -70,13 +65,20 @@ function translateHoneyConfigToVite(honeyConfig, mode = 'development') {
   if (honeyConfig.static) {
     config['publicDir'] = honeyConfig.static;
   }
-  // if (honeyConfig.isReact) {
-  //   // config['plugins'] = [];
-  //   // } else if (honeyConfig.isVue3) {
-  //   //   config['plugins'] = [vue3Plugin(), vueJsx()];
-  // } else {
-  //   config['plugins'] = [createVuePlugin()];
-  // }
+  if (honeyConfig.isReact) {
+    // react
+    const react = eval(`require('${path.resolve(process.cwd(), 'node_modules/@vitejs/plugin-react')}')`);
+    config['plugins'] = [react()];
+  } else if (honeyConfig.isVue3) {
+    // vue3
+    const vue = eval(`require('${path.resolve(process.cwd(), 'node_modules/@vitejs/plugin-vue')}')`);
+    const vueJsx = eval(`require('${path.resolve(process.cwd(), 'node_modules/@vitejs/plugin-vue-jsx')}')`);
+    config['plugins'] = [vue(), vueJsx()];
+  } else {
+    // vue2
+    const { createVuePlugin } = eval(`require('${path.resolve(process.cwd(), 'node_modules/vite-plugin-vue2')}')`);
+    config['plugins'] = [createVuePlugin()];
+  }
 
   // dev 模式配置
   if (mode === 'development') {

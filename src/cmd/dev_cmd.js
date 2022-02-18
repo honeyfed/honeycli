@@ -4,7 +4,7 @@
 
 const { doCmd, rm, writeFile } = require('../util/utils');
 const print = require('../util/print');
-const { getEslintrc, getEslintConfig } = require('../lint/lint');
+const { getEslintConfig } = require('../lint/lint');
 const { getPrettierrc } = require('../format/rc');
 const path = require('path');
 const { generateWebpackConfig } = require('../webpack/config');
@@ -16,6 +16,10 @@ const chokidar = require('chokidar');
 const _ = require('lodash');
 
 async function devCmd(cmd) {
+  // 读取 package.json 中配置
+  const config = loadHoneyConfig();
+  const { useVite, isReact } = config;
+
   if (!cmd.fast) {
     try {
       await doCmd('npm', ['i', '--save', 'core-js@3']);
@@ -27,14 +31,27 @@ async function devCmd(cmd) {
         'eslint',
         'prettier',
         'eslint-plugin-vue',
-        'eslint-plugin-prettier@^3',
         'eslint-plugin-react',
+        'eslint-plugin-prettier@^3',
         'eslint-config-tencent',
       ]);
       await doCmd('npm', ['i']);
+      if (useVite) {
+        if (isReact) {
+          // react
+          await doCmd('npm', ['i', '@vitejs/plugin-react']);
+        } else if (config.isVue3) {
+          // vue3
+          await doCmd('npm', ['i', '@vitejs/plugin-vue', '@vitejs/plugin-vue-jsx']);
+        } else {
+          // vue2
+          await doCmd('npm', ['i', 'vite-plugin-vue2']);
+        }
+      }
       await rm(path.resolve(process.cwd(), '.eslintrc.js'));
-      await rm(path.resolve(process.cwd(), '.eslintrc.json'));
       await rm(path.resolve(process.cwd(), '.eslintrc'));
+      await rm(path.resolve(process.cwd(), '.eslintrc.json'));
+      await rm(path.resolve(process.cwd(), '.eslint.honey.js'));
       await rm(path.resolve(process.cwd(), '.prettierrc'));
     } catch (err) {
       print.error(err);
@@ -43,31 +60,21 @@ async function devCmd(cmd) {
 
   print.info('begin dev server');
 
-  // 读取 package.json 中配置
-  const config = loadHoneyConfig();
-
   // 注入配置文件
   try {
-    // if (config.isReact) {
-    //   writeFile(path.resolve(process.cwd(), '.eslintrc.js'), getEslintrc(1));
-    // } else {
-    //   writeFile(path.resolve(process.cwd(), '.eslintrc.js'), getEslintrc(0));
-    // }
-    writeFile(
-      path.resolve(process.cwd(), '.eslintrc'),
-      JSON.stringify(getEslintConfig(config.isReact ? 'react' : 'vue'))
-    );
+    writeFile(path.resolve(process.cwd(), '.eslintrc'), JSON.stringify(getEslintConfig(isReact ? 'react' : 'vue')));
     writeFile(path.resolve(process.cwd(), '.prettierrc'), JSON.stringify(getPrettierrc()));
   } catch (err) {
     print.error(err);
   }
 
+  let server;
   // 分不同类型构建
-  if (config.useVite) {
+  if (useVite) {
     // vite 构建
     const viteConfig = translateHoneyConfigToVite(config, 'development');
 
-    const server = await createServer({
+    server = await createServer({
       ...viteConfig,
 
       mode: 'development',
@@ -79,28 +86,32 @@ async function devCmd(cmd) {
     server.printUrls();
   } else {
     // webpack 构建
-    let server = await webpackDev(config);
+    server = await webpackDev(config);
+  }
 
-    if (config.dev && config.dev.mock) {
-      const mockFile = path.resolve(process.cwd(), config.dev.mock);
+  // 监听 mock 修改实现热更新
+  if (config.dev && config.dev.mock) {
+    const mockFile = path.resolve(process.cwd(), config.dev.mock);
 
-      // 监听 mock 修改实现热更新
-      chokidar.watch(mockFile).on(
-        'change',
-        _.throttle(
-          () => {
+    chokidar.watch(mockFile).on(
+      'change',
+      _.throttle(
+        () => {
+          if (useVite) {
+            server && server.restart();
+          } else {
             const tmpServer = server;
             server = null;
             tmpServer &&
               tmpServer.close(async () => {
                 server = await webpackDev(config);
               });
-          },
-          2000,
-          { leading: true, trailing: false }
-        )
-      );
-    }
+          }
+        },
+        2000,
+        { leading: true, trailing: false }
+      )
+    );
   }
 }
 

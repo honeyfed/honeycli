@@ -1,6 +1,6 @@
 const program = require('commander');
 const { newCmd } = require('./cmd/new_cmd');
-const { serve } = require('./serve');
+// const { serve } = require('./serve');
 const { gitCommit, gitPushCmd, generateChangeLog } = require('./cmd/commit_cmd');
 const { buildCmd } = require('./cmd/build_cmd');
 const { devCmd } = require('./cmd/dev_cmd');
@@ -10,8 +10,9 @@ const { cdnCmd } = require('./cmd/cdn_cmd');
 const { upgradeCmd } = require('./cmd/upgrade_cmd');
 const print = require('./util/print');
 const { loadJson } = require('./util/utils');
-const path = require('path');
+// const path = require('path');
 const { getPathInLib } = require('./dir');
+
 function main() {
   const packageJson = loadJson(getPathInLib('./package.json'));
   print.info(`honey cli v${packageJson.version}`);
@@ -63,7 +64,7 @@ function main() {
     });
   program
     .command('dev')
-    .option('-f, --fast', '快速启动开发环境')
+    .option('-f, --fast', '跳过 npm 安装，快速启动开发环境')
     .alias('d')
     .description('启动本地开发')
     .action((cmd) => {
