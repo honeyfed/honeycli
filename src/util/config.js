@@ -65,6 +65,7 @@ function translateHoneyConfigToVite(honeyConfig, mode = 'development') {
   if (honeyConfig.static) {
     config['publicDir'] = honeyConfig.static;
   }
+  // 加载 vite 插件
   if (honeyConfig.isReact) {
     // react
     const react = eval(`require('${path.resolve(process.cwd(), 'node_modules/@vitejs/plugin-react')}')`);

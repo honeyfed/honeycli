@@ -1,3 +1,4 @@
+// vue 2
 const vueConfig = {
   env: {
     browser: true,
@@ -12,6 +13,23 @@ const vueConfig = {
   plugins: ['vue'],
 };
 
+// vue 3
+const vue3Config = {
+  env: {
+    browser: true,
+    'vue/setup-compiler-macros': true,
+  },
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: 'babel-eslint',
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  extends: ['plugin:vue/vue3-essential', 'eslint-config-tencent', 'eslint-config-tencent/prettier'],
+  plugins: ['vue'],
+};
+
+// react
 const reactConfig = {
   env: {
     browser: true,
@@ -32,5 +50,6 @@ const reactConfig = {
 
 module.exports = {
   vueConfig,
+  vue3Config,
   reactConfig,
 };

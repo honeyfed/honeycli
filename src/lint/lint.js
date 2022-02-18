@@ -1,11 +1,13 @@
 const path = require('path');
 const { writeFile, rm } = require('../util/utils');
-const { vueConfig, reactConfig } = require('./template');
+const { vueConfig, vue3Config, reactConfig } = require('./template');
 
 function getEslintConfig(type) {
   switch (type) {
     case 'react':
       return reactConfig;
+    case 'vue3':
+      return vue3Config;
     case 'vue':
     // vue 与 default 合并处理
     default:

@@ -30,7 +30,7 @@ async function devCmd(cmd) {
         '--force',
         'eslint',
         'prettier',
-        'eslint-plugin-vue',
+        isVue3 ? 'eslint-plugin-vue@^8' : 'eslint-plugin-vue@^6',
         'eslint-plugin-react',
         'eslint-plugin-prettier@^3',
         'eslint-config-tencent',
@@ -62,7 +62,10 @@ async function devCmd(cmd) {
 
   // 注入配置文件
   try {
-    writeFile(path.resolve(process.cwd(), '.eslintrc'), JSON.stringify(getEslintConfig(isReact ? 'react' : 'vue')));
+    writeFile(
+      path.resolve(process.cwd(), '.eslintrc'),
+      JSON.stringify(getEslintConfig(isReact ? 'react' : isVue3 ? 'vue3' : 'vue'))
+    );
     writeFile(path.resolve(process.cwd(), '.prettierrc'), JSON.stringify(getPrettierrc()));
   } catch (err) {
     print.error(err);
