@@ -23,10 +23,12 @@ function getEsLintOptions(isReact = false) {
   writeFile(configPath, `module.exports = ` + JSON.stringify(configObj));
 
   return {
-    fix: true,
+    // fix: true,
+    fix: false,
     extensions: ['.js', '.jsx', '.vue'],
     useEslintrc: false,
     // errorOnUnmatchedPattern: false,
+    errorOnUnmatchedPattern: true,
     overrideConfigFile: configPath,
     resolvePluginsRelativeTo: process.cwd(), // 设置 plugin 目录相对地址，否则会取到当前 cli 目录
   };
