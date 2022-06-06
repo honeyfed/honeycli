@@ -1,6 +1,6 @@
 {
   "name": "honey-cli3",
-  "version": "1.8.2",
+  "version": "1.8.4",
   "description": "a frontend cli toolkit",
   "main": "cli.js",
   "bin": {

@@ -1,6 +1,7 @@
 const path = require('path');
 const { writeFile, rm } = require('../util/utils');
 const { vueConfig, vue3Config, reactConfig } = require('./template');
+const _ = require('lodash');
 
 function getEslintConfig(type) {
   switch (type) {
@@ -18,7 +19,7 @@ function getEslintConfig(type) {
 function getEsLintOptions(isReact = false) {
   const configPath = path.resolve(process.cwd(), '.eslint.honey.js');
   const type = isReact ? 'react' : 'vue';
-  const configObj = getEslintConfig(type);
+  const configObj = _.cloneDeep(getEslintConfig(type));
   configObj['extends'] = getInternalEslintExtendPath(configObj);
   writeFile(configPath, `module.exports = ` + JSON.stringify(configObj));
 
